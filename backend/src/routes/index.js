@@ -15,15 +15,7 @@ const trashRoutes = require('./trashRoutes');
 
 const router = express.Router();
 
-router.get('/health', (req, res) =>
-  res.json({
-    success: true,
-    status: 'ok',
-    message: 'COMS API is running',
-    uptime: Math.floor(process.uptime()),
-    timestamp: new Date().toISOString(),
-  })
-);
+router.get('/health', (req, res) => res.json({ success: true, message: 'COMS API is running' }));
 router.use('/public', publicRoutes);
 router.use('/auth', authRoutes);
 router.use('/masters', mastersRoutes);
