@@ -380,12 +380,16 @@ async function softDelete(id, userId) {
 }
 
 /** Rows for the Daily Prayer Register, grouped by mass in the application layer. */
-async function getRegisterData(prayerDate, churchId, branchId) {
+async function getRegisterData(prayerDate, churchId, branchId, massId) {
   const conditions = ['pi.prayer_date = ?', 'pi.church_id = ?', 'pi.is_deleted = 0'];
   const params = [prayerDate, churchId];
   if (branchId) {
     conditions.push('(pi.branch_id = ? OR pi.branch_id IS NULL)');
     params.push(branchId);
+  }
+  if (massId) {
+    conditions.push('pi.mass_id = ?');
+    params.push(massId);
   }
   const [rows] = await pool.query(
     `${BASE_SELECT}
